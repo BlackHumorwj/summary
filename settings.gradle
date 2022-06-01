@@ -1,0 +1,7 @@
+include ':textdraw'
+include ':lib'
+include ':app'
+rootProject.name = "for2021"
+include ':alg'
+include ':design'
+include ':design2'

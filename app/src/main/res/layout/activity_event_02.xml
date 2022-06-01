@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <androidx.constraintlayout.utils.widget.MockView
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+
+
+    <FrameLayout
+        android:id="@+id/ll_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvClick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="点击事件" />
+
+
+    </FrameLayout>
+
+
+    <com.kotlin.for2021.view.event.DispatchViewGroup
+        android:layout_width="500dp"
+        android:layout_height="500dp"
+        android:background="@color/black">
+
+
+        <com.kotlin.for2021.view.event.DispatchChildView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@color/white" />
+
+    </com.kotlin.for2021.view.event.DispatchViewGroup>
+
+
+</LinearLayout>

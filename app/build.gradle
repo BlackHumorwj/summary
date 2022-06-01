@@ -1,0 +1,176 @@
+plugins {
+    id 'com.android.application'
+    //自定义插件
+    id 'com.kingboy.gradle'
+}
+
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion 31
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        applicationId "com.kotlin.for2021"
+        minSdkVersion 19
+        targetSdkVersion 31
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    //Cannot inline bytecode built with JVM target 1.8 into bytecode that is being built with JVM target 1.6
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+
+    //开启 ViewBinding
+    buildFeatures {
+        viewBinding true
+    }
+
+}
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation project(path: ':alg')
+    implementation files('libs\\nineoldandroids-2.4.0.jar')
+    //test目录测试
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    //Android Test项目使用
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    implementation 'com.github.amikoj:ShadowView:1.0.1'
+    api 'androidx.multidex:multidex:2.0.1'
+//      api 'com.qiyukf.unicorn:unicorn:4.12.0'
+    //  api 'com.qiyukf.unicorn:unicorn:6.2.0'
+
+    api 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    api 'com.squareup.retrofit2:retrofit:2.9.0'
+    api 'com.squareup.retrofit2:converter-gson:2.9.0'
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
+    api 'com.squareup.okhttp3:logging-interceptor:3.11.0'
+
+    api 'com.squareup.okhttp3:okhttp:4.9.2'
+
+    api "io.reactivex.rxjava2:rxjava:2.2.19"
+    api 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    api 'com.trello.rxlifecycle2:rxlifecycle-android-lifecycle:2.2.2'
+
+
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    api 'androidx.core:core-ktx:1.7.0'
+
+
+//    api 'com.squareup.okhttp3:mockwebserver:4.9.2'
+
+
+    //弹窗库
+    implementation 'com.kongzue.dialog_v3:dialog:3.2.4'
+
+
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
+
+    //协成依赖
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
+    // lifeCycle 对协成支持
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0"
+    //viewModel 对协成支持
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
+
+
+    api 'com.github.Commit451:NativeStackBlur:1.0.5'
+
+    api 'com.squareup.leakcanary:leakcanary-android:2.7'
+
+    api 'androidx.asynclayoutinflater:asynclayoutinflater:1.0.0'
+
+    //图片压缩
+    api 'top.zibin:Luban:1.1.3'
+
+}
+
+//https://mp.weixin.qq.com/s/KLszW0H7fFjEL6jB47WZ9A
+android.applicationVariants.all { variant ->
+    variant.outputs.each { output ->
+        //println("=============== ${variant.getBuildType().name.toUpperCase()} ===============")
+        //println("=============== ${variant.getFlavorName()} ===============")
+        def vn
+        if (variant.getFlavorName() != null && variant.getFlavorName() != "") {
+            vn = variant.name;
+        } else {
+            if (variant.getBuildType().name == "release") {
+                vn = "Release"
+            } else {
+                vn = "Debug"
+            }
+        }
+        def taskName = "process${vn}MainManifest";
+        try {
+            println("=============== taskName ${taskName} ===============")
+            project.getTasks().getByName(taskName)
+        } catch (Exception e) {
+            e.printStackTrace()
+            return
+        }
+        ///你的自定义名字
+        project.getTasks().getByName(taskName).doFirst {
+            //def method = it.getClass().getMethods()
+            it.getManifests().getFiles().each {
+
+                if (it.exists() && it.canRead()) {
+                    def manifestFile = it
+                    def exportedTag = "android:exported"
+                    def nameTag = "android:name"
+                    ///这里第二个参数是 false ，所以 namespace 是展开的，所以下面不能用 androidSpace，而是用 nameTag
+                    def xml = new XmlParser(false, false).parse(manifestFile)
+
+                    println("manifestFile ${manifestFile} ===============")
+
+
+                    if (xml.application != null && xml.application.size() > 0) {
+                        def nodes = xml.application[0].'*'.findAll {
+                            //挑选要修改的节点，没有指定的 exported 的才需要增加
+                            //如果 exportedTag 拿不到可以尝试 it.attribute(androidSpace.exported)
+                            (it.name() == 'activity' || it.name() == 'receiver' || it.name() == 'service') && it.attribute(exportedTag) == null
+
+                        }
+                        if (nodes.application != null && nodes.application.size() > 0) {
+                            nodes.each {
+                                def t = it
+                                it.each {
+                                    if (it.name() == "intent-filter") {
+                                        println("$manifestFile \n .....................${t.attributes().get(nameTag)}......................")
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+
+                }
+            }
+        }
+    }
+}
+
+
+

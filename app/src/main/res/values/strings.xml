@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">hello world 2022</string>
+    <string name="secret_key_name">biometric_sample_encryption_key</string>
+</resources>

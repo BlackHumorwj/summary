@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.kotlin.for2021">
+
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:name=".AppData"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.For2021">
+        <activity android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".android.jetpack.livedata.LiveDataActivity" />
+        <activity android:name=".android.fragment.UmengTestActivity" />
+        <activity
+            android:name=".android.virtual.VirtualActivity"
+            android:process=":new" />
+        <activity
+            android:name=".TestActivtiy"
+            android:process=":new" />
+        <activity android:name=".SecondActivity" />
+        <activity android:name=".view.event.EventTestActivity" />
+        <activity android:name=".view.recyclerView.RvActivity" />
+        <activity android:name=".view.viewPager.ViewPagerTestActivity" />
+        <activity android:name=".BluetoothViewActivity" />
+        <activity
+            android:name=".view.recyclerView.NestedRvActivity"/>
+        <activity android:name=".android.jetpack.viewModel.MyViewModelActivity" />
+        <activity android:name=".android.jetpack.coroutine.CoroutineDemoActivity" />
+        <activity android:name=".view.event.EventTest02Activity" />
+        <activity android:name=".view.event.ViewTest01Activity" />
+        <activity android:name=".view.event.EventTest03Activity" />
+        <activity android:name=".view.measure.MeasureActivity" />
+        <activity android:name=".view.draw.DrawActivity" />
+        <activity android:name=".android.laucherMode.SecondModeActivity"
+            android:process=":new"
+            android:launchMode="singleInstance" />
+        <activity android:name=".android.laucherMode.FirstModeActivity" />
+        <activity android:name=".android.animator.AnimatorActivity" />
+        <activity android:name=".android.async.AsyncInflateActivity" />
+        <activity android:name=".android.jetpack.viewBinding.ViewBindingActivity" />
+        <activity android:name=".android.laucherMode.ThreeModeActivity" />
+        <activity android:name=".view.DragBubbleActivity" />
+        <activity android:name=".camera.Camera01Activity" />
+        <activity android:name=".java.annotion.AnnotationActivity" />
+        <activity android:name=".android.jetpack.flow.FlowActivity" />
+    </application>
+
+</manifest>

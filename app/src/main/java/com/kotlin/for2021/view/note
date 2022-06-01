@@ -1,0 +1,14 @@
+1、drawText、clip 裁剪、属性动画、画布的保存
+    自定义View
+               基础：测量、坐标系、View api
+
+               绘制类型的 onDraw Canvas Paint
+
+               滑动类型的 Scroller 滑动等等 => 滑动冲突处理
+
+               都和动画有关【属性动画等】
+
+
+
+
+2、RecyclerView ItemDecoration
