@@ -9,7 +9,6 @@ import android.os.Process;
 import android.os.SystemClock;
 import android.util.Log;
 
-
 public class ANRWatchDog extends Thread {
 
     private static final String TAG = "ANR";
