@@ -1,4 +1,5 @@
 1、报错：OpenSSL SSL_read: Connection was reset, errno 10054
+   报错：Failed to connect to github.com port 443: Timed out
 解决方案：git config --global --unset-all remote.origin.proxy
 
 
