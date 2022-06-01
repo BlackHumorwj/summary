@@ -1,0 +1,9 @@
+1、报错：OpenSSL SSL_read: Connection was reset, errno 10054
+解决方案：git config --global --unset-all remote.origin.proxy
+
+
+2、提交代码报错
+ 解决 >git remote set-url origin https://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@github.com/BlackHumorwj/summary.git
+
+
+
